@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: !startsWith(github.ref, 'refs/tags/v')
+    if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
 
     steps:
       - uses: actions/checkout@v2
@@ -60,6 +60,17 @@ jobs:
         with:
           java-version: 16
 
+      - name: Cache gradle files
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ./.gradle/loom-cache
+          key: ${{ runner.os }}-gradle-release
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Build with Gradle
         run: |
           chmod +x gradlew
@@ -73,7 +84,7 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: [${{ matrix.release-branch }}] build-artifacts
+          name: '[${{ matrix.release-branch }}] build-artifacts'
           path: build/libs/
 
       - name: Upload to the Github release
