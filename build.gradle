@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.9-SNAPSHOT'
+	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -7,7 +7,10 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 String versionSuffix = ''
-String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
+if (System.getenv("BUILD_RELEASE") != "true") {
+	versionSuffix += '-SHAPSHOT'
+}
+String buildNumber = System.getenv("BUILD_ID")
 if (buildNumber != null) {
 	versionSuffix = '+build.' + buildNumber
 }
@@ -61,13 +64,7 @@ jar {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
+			from components.java
 		}
 	}
 
