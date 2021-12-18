@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: 'Display current branch name'
+      - name: 'Display current branch/tag name'
         run: echo ${{ github.ref_name }}
 
       - id: setmatrix
@@ -27,6 +27,9 @@ jobs:
         with:
           # inputFile: '.github/workflows/matrix_includes.json' # Default input file path
           filter: '[? `${{ github.event_name }}` == `release` || `${{ github.ref_name }}` == branch]'
+
+      - name: 'Print matrix'
+        run: echo ${{ steps.setmatrix.outputs.matrix }}
 
   release:
     needs: matrix_prep
