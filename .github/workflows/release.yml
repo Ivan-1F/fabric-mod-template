@@ -17,12 +17,13 @@ jobs:
     outputs:
       matrix: ${{ steps.setmatrix.outputs.matrix }}
     steps:
+      - uses: actions/checkout@v2
+
       - name: 'Display current branch name'
         run: echo ${{ github.ref_name }}
 
-      - uses: actions/checkout@v2
       - id: setmatrix
-        uses: JoshuaTheMiller/conditional-build-matrix
+        uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
         with:
           # inputFile: '.github/workflows/matrix_includes.json' # Default input file path
           filter: '[?branch==`${{ github.ref_name }}`]'
