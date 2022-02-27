@@ -1,4 +1,4 @@
-package me.fallenbreath.template_mod.mixins;
+package me.ivan1f.template_mod.mixins;
 
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
