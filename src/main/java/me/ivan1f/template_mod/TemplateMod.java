@@ -1,4 +1,4 @@
-package me.ivan1f.template_mod.mixins;
+package me.ivan1f.template_mod;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
